@@ -1,0 +1,32 @@
+import sys
+import json
+import joblib
+import pandas as pd
+
+# Load models
+models = {
+    "Electronics": joblib.load("models/electronics_model.pkl"),
+    "Grocery": joblib.load("models/grocery_model.pkl"),
+}
+
+def predict(data):
+    category = data.get("Category")
+    if category not in models:
+        return json.dumps({"error": "Invalid category"})
+
+    model = models[category]
+
+    # Convert input to DataFrame
+    input_features = pd.DataFrame([data])
+
+    try:
+        prediction = model.predict(input_features)[0]
+        risk_factor = min(1.0, prediction / 1000)  # Example risk calculation
+        return json.dumps({"predicted_demand": int(prediction), "risk_factor": risk_factor})
+    except Exception as e:
+        return json.dumps({"error": str(e)})
+
+if __name__ == "__main__":
+    input_json = sys.argv[1]
+    input_data = json.loads(input_json)
+    print(predict(input_data))
