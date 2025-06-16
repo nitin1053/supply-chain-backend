@@ -16,7 +16,8 @@ public class PredictionService {
     public double predict(String category, String subcategory, String region, String season,
                           int warehouseId, int leadTime, double supplierReliability, double price,
                           int stockLevel, double transportCost, int promotion,
-                          int prevDemand1, int prevDemand2, int prevDemand3) {
+                          int prevDemand1, int prevDemand2, int prevDemand3,String manufacturingDate, String expiryDate,
+                          int daysToExpiry, double seasonalIndex, int shelfLifeDays) {
 
         // Prepare input JSON data
         Map<String, Object> requestBody = new HashMap<>();
@@ -34,6 +35,12 @@ public class PredictionService {
         requestBody.put("prevDemand1", prevDemand1);
         requestBody.put("prevDemand2", prevDemand2);
         requestBody.put("prevDemand3", prevDemand3);
+        requestBody.put("daysToExpiry", daysToExpiry);
+        requestBody.put("seasonalIndex", seasonalIndex);
+        requestBody.put("shelfLifeDays", shelfLifeDays);
+        requestBody.put("manufacturingDate", manufacturingDate);
+        requestBody.put("expiryDate", expiryDate);
+
 
         // Set headers for JSON request
         HttpHeaders headers = new HttpHeaders();

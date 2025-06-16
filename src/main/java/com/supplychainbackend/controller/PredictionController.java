@@ -37,9 +37,15 @@ public class PredictionController {
             Integer prevDemand1 = (Integer) requestBody.get("prevDemand1");
             Integer prevDemand2 = (Integer) requestBody.get("prevDemand2");
             Integer prevDemand3 = (Integer) requestBody.get("prevDemand3");
+            Integer daysToExpiry = (Integer) requestBody.get("daysToExpiry");
+            Double seasonalIndex = ((Number) requestBody.get("seasonalIndex")).doubleValue();
+            Integer shelfLifeDays = (Integer) requestBody.get("shelfLifeDays");
+            String manufacturingDateStr = (String) requestBody.get("manufacturingDate");
+            String expiryDateStr = (String) requestBody.get("expiryDate");
+
 
             // Call prediction service
-            double predictedDemand = predictionService.predict(category, subcategory, region, season, warehouseId, leadTime, supplierReliability, price, stockLevel, transportCost, promotion, prevDemand1, prevDemand2, prevDemand3);
+            double predictedDemand = predictionService.predict(category, subcategory, region, season, warehouseId, leadTime, supplierReliability, price, stockLevel, transportCost, promotion, prevDemand1, prevDemand2, prevDemand3,manufacturingDateStr,expiryDateStr,daysToExpiry,seasonalIndex,shelfLifeDays);
 
             // Return response
             return ResponseEntity.ok(Map.of("predicted_demand", predictedDemand));

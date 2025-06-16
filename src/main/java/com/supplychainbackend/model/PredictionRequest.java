@@ -1,6 +1,7 @@
 package com.supplychainbackend.model;
 //package com.supplychain.model;
 
+
 public class PredictionRequest {
     private String category;
     private String region;
